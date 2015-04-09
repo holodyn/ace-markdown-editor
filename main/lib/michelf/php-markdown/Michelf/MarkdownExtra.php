@@ -34,5 +34,23 @@ class MarkdownExtra extends \Michelf\_MarkdownExtra_TmpImpl {
 	# Temporarily, the implemenation is in the _MarkdownExtra_TmpImpl class.
 	# See note above.
 
+  public function __construct() {
+
+    $this->span_gamut['doHardBreaksExtra'] = 55;
+
+    parent::__construct();
+
+  }
+
+  protected function doHardBreaksExtra($text) {
+    # Do hard breaks:
+    return preg_replace_callback('/([\s\n]+\n+|\n+[\s\n]+)/',
+      array(&$this, '_doHardBreaksExtra_callback'), $text);
+  }
+
+  protected function _doHardBreaksExtra_callback($matches) {
+    return $this->hashPart("<br$this->empty_element_suffix\n");
+  }
+
 }
 

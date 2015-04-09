@@ -153,7 +153,8 @@ class PlgSystemAkmarkdown extends JPlugin
 	 */
 	public function onContentPrepare($context, &$article, &$params, $page = 0)
 	{
-		$article->text = '<div class="akmarkdown-content" >' . $this->render($article->text) . '</div>';
+		$wrapClass = $this->params->get('Article_WrapClass', 'akmarkdown-content');
+		$article->text = '<div class="'.$wrapClass.' item'.$article->id.'" >' . $this->render($article->text) . '</div>';
 	}
 
 	/**
@@ -306,9 +307,21 @@ class PlgSystemAkmarkdown extends JPlugin
 		}
 
 		$doc = JFactory::getDocument();
+    $tmpl = JFactory::getApplication()->getTemplate();
 
-		$this->addStylesheetInHeadBottom(JUri::root(true) . '/plugins/system/akmarkdown/' . $css, $this->hash);
-		$doc->addScriptVersion(JUri::root(true) . '/plugins/system/akmarkdown/assets/js/highlight/highlight.pack.js', $this->hash);
+		if( is_readable(JPATH_BASE . '/templates/' . $tmpl . '/js/highlight/styles/' . $theme . '.css') ){
+      $this->addStylesheetInHeadBottom(JUri::root(true) . '/templates/wbteampro/js/highlight/styles/'.$theme.'.css', $this->hash);
+    }
+    else {
+      $this->addStylesheetInHeadBottom(JUri::root(true) . '/plugins/system/akmarkdown/' . $css, $this->hash);
+    }
+
+    if( is_readable(JPATH_BASE . '/templates/' . $tmpl . '/js/highlight/highlight.pack.js') ){
+  		$doc->addScriptVersion(JUri::root(true) . '/templates/wbteampro/js/highlight/highlight.pack.js', $this->hash);
+    }
+    else {
+      $doc->addScriptVersion(JUri::root(true) . '/plugins/system/akmarkdown/assets/js/highlight/highlight.pack.js', $this->hash);
+    }
 
 		$doc->addScriptDeclaration("\n    ;hljs.initHighlightingOnLoad();");
 	}

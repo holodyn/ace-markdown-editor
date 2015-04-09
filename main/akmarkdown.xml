@@ -126,6 +126,15 @@
                     filter="int"
                 />
                 
+                <field name="Article_WrapClass"
+                    type="text"
+                    label="PLG_SYSTEM_AKMARKDOWN_WRAP_CLASS"
+                    description="PLG_SYSTEM_AKMARKDOWN_WRAP_CLASS_DESC"
+                    class="input-xxlarge"
+                    size="45"
+                    labelclass="control-label"
+                    default="akmarkdown-content"
+                />
                 <field name="Article_ImageClass"
                     type="text"
                     label="PLG_SYSTEM_AKMARKDOWN_IMAGE_CLASS"
